@@ -55,6 +55,7 @@ public class MultiCameraController : MonoBehaviour {
         int normalCameraCount = cameras.Length-ceilingCameraCount;
 
         int col = 3;
+        float heightStep = 0.5f;
         float angleStep = 360 / (normalCameraCount/col);
         float currentAngle = initAngle;
 
@@ -62,7 +63,7 @@ public class MultiCameraController : MonoBehaviour {
 
         for (int i = 0; i < normalCameraCount; ++i) {
             float rad = currentAngle * Mathf.Deg2Rad;
-            Vector3 newPosition = new Vector3(radius * Mathf.Cos(rad), i%col*2, radius * Mathf.Sin(rad)) + this.transform.position;
+            Vector3 newPosition = new Vector3(radius * Mathf.Cos(rad), i%col*heightStep, radius * Mathf.Sin(rad)) + this.transform.position;
             cameras[i].transform.position = newPosition;
             cameras[i].transform.rotation = Quaternion.LookRotation(this.transform.position - newPosition, Vector3.up);
 
@@ -83,7 +84,7 @@ public class MultiCameraController : MonoBehaviour {
         
         for (int i = normalCameraCount; i < cameras.Length; ++i) {    
             float rad = currentAngle * Mathf.Deg2Rad;
-            Vector3 newPosition = new Vector3(ceilingradius * Mathf.Cos(rad), (col-1)*2, ceilingradius * Mathf.Sin(rad)) + this.transform.position;
+            Vector3 newPosition = new Vector3(ceilingradius * Mathf.Cos(rad), (col-1)*heightStep, ceilingradius * Mathf.Sin(rad)) + this.transform.position;
             cameras[i].transform.position = newPosition;
             cameras[i].transform.rotation = Quaternion.LookRotation(this.transform.position - newPosition, Vector3.up);
             currentAngle += angleStep;            
